@@ -3,150 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIBE-X STUDIO BD | Private Access</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-    
+    <title>VIBE-X STUDIO BD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #7d5fff;
-            --secondary: #22d3ee;
-            --bg: #0b0e14;
-            --card-bg: #161b22;
-            --accent: #22c55e;
-        }
+        :root { --primary: #7d5fff; --bg: #0b1016; --card-bg: #161b22; }
+        body { background-color: var(--bg); color: white; font-family: 'Rajdhani', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 30px 10px; }
+        
+        /* কাস্টমার ভিউ */
+        .header { text-align: center; margin-bottom: 20px; }
+        .logo-img { width: 100px; height: auto; }
+        .product-card { background: var(--card-bg); border: 1px solid #30363d; border-radius: 20px; padding: 20px; max-width: 350px; text-align: center; }
+        .product-img { width: 100%; border-radius: 15px; margin-bottom: 15px; }
+        .price { font-size: 28px; color: #22d3ee; font-weight: bold; }
+        .order-btn { background: #22c55e; color: white; text-decoration: none; padding: 15px; border-radius: 12px; display: block; font-weight: bold; margin-top: 15px; }
 
-        body {
-            background-color: var(--bg);
-            color: #ffffff;
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
-
-        /* লগইন বক্স */
-        #login-container {
-            background: var(--card-bg);
-            padding: 40px 20px;
-            border-radius: 25px;
-            border: 1px solid #30363d;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            width: 85%;
-            max-width: 350px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .logo-img { width: 100px; height: auto; margin-bottom: 10px; }
-        h1 { font-family: 'Orbitron', sans-serif; color: var(--primary); font-size: 22px; margin-bottom: 20px; letter-spacing: 2px; }
-
-        input {
-            width: 80%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            border-radius: 10px;
-            color: white;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .login-btn {
-            background: linear-gradient(45deg, var(--primary), #a29bfe);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            width: 90%;
-        }
-
-        /* ড্যাশবোর্ড (লগইন করার পর আসবে) */
-        #dashboard {
-            display: none;
-            width: 100%;
-            padding: 20px;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 350px;
-            margin: 0 auto;
-            border: 1px solid #30363d;
-        }
-
-        .product-img {
-            width: 100%;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            background: #21262d;
-        }
-
-        .price { font-size: 26px; color: var(--secondary); font-weight: bold; margin: 10px 0; }
-
-        .wa-btn {
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 12px;
-            display: block;
-            font-weight: bold;
-            font-size: 18px;
-            margin-top: 15px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* গোপন অ্যাডমিন প্যানেল */
+        #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 16, 22, 0.98); z-index: 1000; padding: 50px 20px; box-sizing: border-box; }
+        .admin-box { background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--primary); max-width: 400px; margin: 0 auto; text-align: center; }
+        input { width: 80%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; text-align: center; }
+        
+        .secret-lock { margin-top: 50px; opacity: 0.2; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
 
-    <div id="login-container">
-        <img src="logo.png" alt="Logo" class="logo-img">
-        <h1>VIBE-X STUDIO</h1>
-        <input type="password" id="passkey" placeholder="Enter Passkey">
-        <button class="login-btn" onclick="checkAuth()">LOGIN</button>
-        <p id="err" style="color: #ff4d4d; font-size: 14px; margin-top: 10px; display: none;">ভুল পাসওয়ার্ড!</p>
-    </div>
-
-    <div id="dashboard">
-        <img src="logo.png" alt="Logo" style="width: 70px; margin-bottom: 10px;">
-        <h2 style="font-family: 'Orbitron'; color: var(--primary);">OFFICIAL STORE</h2>
-        
-        <div class="product-card">
-            <img src="product.jpg" alt="Aura Collection" class="product-img">
-            <h3 style="margin: 5px 0;">AURA EDITION - STREETWEAR</h3>
-            <div class="price">৳১২০০</div>
-            <a href="https://wa.me/8801830891270?text=Hi Mahin, I want to order the Aura Edition T-shirt." class="wa-btn">
-                ORDER ON WHATSAPP
-            </a>
+    <div id="customer-view">
+        <div class="header">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <h1 style="font-family: 'Orbitron'; color: var(--primary); font-size: 20px;">VIBE-X STUDIO BD</h1>
         </div>
 
-        <button onclick="location.reload()" style="background:none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 8px 15px; border-radius: 8px; margin-top: 30px; cursor: pointer;">LOGOUT</button>
+        <div class="product-card">
+            <img src="product.jpg" alt="Aura Edition" class="product-img">
+            <h2 style="font-family: 'Orbitron';">AURA EDITION</h2>
+            <div class="price">৳ ১২০০</div>
+            <a href="https://wa.me/8801830891270?text=Hi, I want to order." class="order-btn">অর্ডার করুন (WhatsApp)</a>
+        </div>
+
+        <div class="secret-lock" onclick="openAdmin()">Admin Access 🔒</div>
+    </div>
+
+    <div id="admin-panel">
+        <div class="admin-box" id="login-form">
+            <h3>অ্যাডমিন লগইন</h3>
+            <input type="password" id="pass" placeholder="পাসওয়ার্ড দাও">
+            <button onclick="checkPass()" style="background: var(--primary); border: none; color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer;">LOGIN</button>
+            <button onclick="closeAdmin()" style="background: #ef4444; border: none; color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 10px;">CANCEL</button>
+        </div>
+
+        <div class="admin-box" id="dashboard" style="display: none;">
+            <h2 style="color: #22c55e;">হ্যালো মাহিন!</h2>
+            <p>এখান থেকে তুমি তোমার সাইট ম্যানেজ করতে পারবে।</p>
+            <p>১. নতুন ছবি দিতে GitHub-এ <b>Upload</b> করো।</p>
+            <p>২. দাম বদলাতে GitHub-এ <b>index.html</b> এডিট করো।</p>
+            <button onclick="closeAdmin()" style="background: var(--primary); border: none; color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer;">BACK TO SITE</button>
+        </div>
     </div>
 
     <script>
-        function checkAuth() {
-            const input = document.getElementById("passkey").value;
-            // পাসওয়ার্ড এখানে চেক হচ্ছে
-            if (input === "vibe26") {
-                document.getElementById("login-container").style.display = "none";
-                document.getElementById("dashboard").style.display = "block";
-                document.body.style.alignItems = "flex-start";
-                document.body.style.paddingTop = "40px";
+        function openAdmin() { document.getElementById('admin-panel').style.display = 'block'; }
+        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+        
+        function checkPass() {
+            const p = document.getElementById('pass').value;
+            if(p === "vibe26") {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
             } else {
-                document.getElementById("err").style.display = "block";
+                alert("ভুল পাসওয়ার্ড!");
             }
         }
     </script>
